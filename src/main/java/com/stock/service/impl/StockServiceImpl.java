@@ -61,7 +61,11 @@ public class StockServiceImpl implements StockService {
 		LOGGER.debug("getStockDetails : Start");
 		Map<String, Stock> map = stockCache.get(applicationConfig.getDeafultStockExchange());
 		if(null != map) {
-			map.forEach((symbol, stock) -> stocks.add(stock));
+			map.forEach((symbol, stock) -> {
+				if(applicationConfig.getDefaultStockSupported().contains(symbol)) {
+					stocks.add(stock);
+				}
+			});
 		}
 		LOGGER.debug("getStockDetails : End");
 		return stocks;
